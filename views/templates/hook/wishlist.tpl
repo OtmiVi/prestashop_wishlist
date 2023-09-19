@@ -1,10 +1,10 @@
 
-{if $customer.is_logged}
-    <button class="wishlist-button">add to wishlist</button>
-{else}
-    <button class="wishlist-button-not-login" >
+<button class="wishlist-button">
+    {if $customer.is_logged}
+        {l s='Add to wishlist' mod='wishlist'}
+    {else}
         <a href={$link->getPageLink('my-account')} target="_blank">
-            add to wishlist
+            {l s='Add to wishlist' mod='wishlist'}
         </a>
-    </button>
-{/if}
+    {/if}
+</button>
