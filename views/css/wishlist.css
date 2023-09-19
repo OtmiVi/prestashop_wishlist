@@ -1,0 +1,13 @@
+
+.wishlist-button {
+    background-color: #007BFF;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.wishlist-button:hover {
+    background-color: #0056b3;
+}

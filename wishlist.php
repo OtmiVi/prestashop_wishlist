@@ -40,6 +40,9 @@ class Wishlist extends Module
         return (
             parent::install()
             && Configuration::updateValue('WISHLIST_NAME', 'wishlist')
+            && $this->registerHook('displayProductListReviews')
+            && $this->registerHook('actionFrontControllerSetMedia')
+
         );
     }
 
@@ -50,4 +53,31 @@ class Wishlist extends Module
             && Configuration::deleteByName('WISHLIST_NAME')
         );
     }
+
+    public function hookDisplayProductListReviews()
+    {
+        return $this->display( __FILE__, 'views/templates/hook/wishlist.tpl');
+    }
+
+    public function hookActionFrontControllerSetMedia()
+    {
+        $this->context->controller->registerStylesheet(
+            'wishlist-style',
+            $this->_path.'views/css/wishlist.css',
+            [
+                'media' => 'all',
+                'priority' => 1000,
+            ]
+        );
+
+        $this->context->controller->registerJavascript(
+            'wishlist-javascript',
+            $this->_path.'views/js/wishlist.js',
+            [
+                'position' => 'bottom',
+                'priority' => 1000,
+            ]
+        );
+    }
+
 }
