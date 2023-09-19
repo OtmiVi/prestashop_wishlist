@@ -42,21 +42,26 @@ class Wishlist extends Module
             && Configuration::updateValue('WISHLIST_NAME', 'wishlist')
             && $this->registerHook('displayProductListReviews')
             && $this->registerHook('actionFrontControllerSetMedia')
-
+            && $this->registerHook('displayProductAdditionalInfo')
         );
     }
 
     public function uninstall()
     {
         return (
-            parent::uninstall()
-            && Configuration::deleteByName('WISHLIST_NAME')
+            Configuration::deleteByName('WISHLIST_NAME')
+            && parent::uninstall()
         );
     }
 
     public function hookDisplayProductListReviews()
     {
         return $this->display( __FILE__, 'views/templates/hook/wishlist.tpl');
+    }
+
+    public function hookDisplayProductAdditionalInfo()
+    {
+        return $this->display( __FILE__, 'views/templates/hook/product_page_wishlist.tpl');
     }
 
     public function hookActionFrontControllerSetMedia()
