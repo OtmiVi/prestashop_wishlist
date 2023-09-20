@@ -75,6 +75,11 @@ class Wishlist extends Module
 
     public function hookActionFrontControllerSetMedia()
     {
+
+        Media::addJsDef( [
+                'url' => 'module/wishlist/actions'
+            ]
+        );
         $this->context->controller->registerStylesheet(
             'wishlist-style',
             $this->_path . 'views/css/wishlist.css',

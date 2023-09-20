@@ -3,14 +3,13 @@ $(document).ready(function(){
         e.preventDefault();
         let productId = $(this).closest('.js-product-miniature').data('idProduct');
 
-        console.log(productId);
-
         $.ajax({
             type: 'POST',
-            url: 'http://presta8/uk/module/wishlist/add',
+            url: url,
             datatype: 'json',
             data: {
                 productId: productId,
+                ajax: 1,
                 action: 'add',
             },
             success: function(jsonData)
