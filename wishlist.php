@@ -14,8 +14,8 @@ class Wishlist extends Module
         $this->author = 'Yura Kuziv';
         $this->need_instance = 0;
         $this->ps_versions_compliancy = [
-            'min' =>  _PS_VERSION_,
-            'max' =>  _PS_VERSION_,
+            'min' => _PS_VERSION_,
+            'max' => _PS_VERSION_,
         ];
         $this->bootstrap = true;
 
@@ -43,6 +43,14 @@ class Wishlist extends Module
             && $this->registerHook('displayProductListReviews')
             && $this->registerHook('actionFrontControllerSetMedia')
             && $this->registerHook('displayProductAdditionalInfo')
+            && Db::getInstance()->execute(
+                'CREATE TABLE IF NOT EXISTS `' . _DB_PREFIX_ . 'wishlist` 
+                (
+                    `id_wishlist` int(10) NOT NULL AUTO_INCREMENT,
+                  `id_product` int(10) NOT NULL,
+                  `id_customer` int(10) NOT NULL,
+                  PRIMARY KEY (`id_wishlist`)
+                ) ENGINE=' . _MYSQL_ENGINE_ . ' DEFAULT CHARSET=utf8;')
         );
     }
 
@@ -50,25 +58,26 @@ class Wishlist extends Module
     {
         return (
             Configuration::deleteByName('WISHLIST_NAME')
+            && Db::getInstance()->execute('DROP TABLE IF EXISTS `' . _DB_PREFIX_ . 'wishlist`')
             && parent::uninstall()
         );
     }
 
     public function hookDisplayProductListReviews()
     {
-        return $this->display( __FILE__, 'views/templates/hook/wishlist.tpl');
+        return $this->display(__FILE__, 'views/templates/hook/wishlist.tpl');
     }
 
     public function hookDisplayProductAdditionalInfo()
     {
-        return $this->display( __FILE__, 'views/templates/hook/product_page_wishlist.tpl');
+        return $this->display(__FILE__, 'views/templates/hook/product_page_wishlist.tpl');
     }
 
     public function hookActionFrontControllerSetMedia()
     {
         $this->context->controller->registerStylesheet(
             'wishlist-style',
-            $this->_path.'views/css/wishlist.css',
+            $this->_path . 'views/css/wishlist.css',
             [
                 'media' => 'all',
                 'priority' => 1000,
@@ -77,7 +86,7 @@ class Wishlist extends Module
 
         $this->context->controller->registerJavascript(
             'wishlist-javascript',
-            $this->_path.'views/js/wishlist.js',
+            $this->_path . 'views/js/wishlist.js',
             [
                 'position' => 'bottom',
                 'priority' => 1000,
