@@ -43,6 +43,8 @@ class Wishlist extends Module
             && $this->registerHook('displayProductListReviews')
             && $this->registerHook('actionFrontControllerSetMedia')
             && $this->registerHook('displayProductAdditionalInfo')
+            && $this->registerHook('displayNav2')
+            && $this->registerHook('displayCustomerAccount')
             && Db::getInstance()->execute(
                 'CREATE TABLE IF NOT EXISTS `' . _DB_PREFIX_ . 'wishlist` 
                 (
@@ -71,6 +73,32 @@ class Wishlist extends Module
     public function hookDisplayProductAdditionalInfo()
     {
         return $this->display(__FILE__, 'views/templates/hook/product_page_wishlist.tpl');
+    }
+
+    public function hookDisplayNav2()
+    {
+        $context = Context::getContext();
+
+        $url = Context::getContext()->link->getModuleLink($this->name, 'list', [], true);
+
+        $this->context->smarty->assign([
+            'front_controller' => $url,
+        ]);
+
+        return $this->display(__FILE__, 'views/templates/hook/list_button.tpl');
+    }
+
+    public function hookDisplayCustomerAccount()
+    {
+        $context = Context::getContext();
+
+        $url = Context::getContext()->link->getModuleLink($this->name, 'list', [], true);
+
+        $this->context->smarty->assign([
+            'front_controller' => $url,
+        ]);
+
+        return $this->fetch('module:' . $this->name . '/views/templates/front/customerAccount.tpl');
     }
 
     public function hookActionFrontControllerSetMedia()
