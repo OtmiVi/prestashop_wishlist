@@ -8,10 +8,23 @@
     transition: background-color 0.3s;
 }
 
+.wishlist-button-remove{
+    background-color: #ee1e2d;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
 .wishlist-button-not-login a{
     color: #fff;
 }
 
 .wishlist-button:hover, .wishlist-button-not-login:hover{
     background-color: #0056b3;
+}
+
+.wishlist-button-remove:hover{
+    background-color: firebrick;
 }

@@ -1,7 +1,10 @@
 $(document).ready(function(){
-    $('.wishlist-button').on('click', function (e){
+    $('.wishlist-button, .wishlist-button-remove').on('click', function (e){
         e.preventDefault();
-        let productId = $(this).closest('.js-product-miniature').data('idProduct');
+        let button = $(this);
+        let productId = button.closest('.js-product-miniature').data('idProduct');
+        let action = button.hasClass('wishlist-button') ? 'add' : 'remove';
+
 
         $.ajax({
             type: 'POST',
@@ -10,16 +13,26 @@ $(document).ready(function(){
             data: {
                 productId: productId,
                 ajax: 1,
-                action: 'add',
+                action: action,
             },
             success: function(jsonData)
             {
-               console.log(jsonData);
+                if (action === 'add') {
+                    console.log('add');
+                } else {
+                    console.log('remove');
+                    console.log(jsonData);
+                }
+               changeStatus(button);
             },
-            error: function(XMLHttpRequest, textStatus, errorThrown)
+            error: function(error)
             {
-                console.log(XMLHttpRequest);
+                console.log(error);
             }
         });
     });
+
+    function changeStatus(button){
+        button.toggleClass('wishlist-button wishlist-button-remove');
+    }
 });
