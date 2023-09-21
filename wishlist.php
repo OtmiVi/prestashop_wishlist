@@ -105,7 +105,7 @@ class Wishlist extends Module
     {
 
         Media::addJsDef( [
-                'url' => 'module/wishlist/actions'
+                'url' => Context::getContext()->link->getModuleLink($this->name, 'actions', [], true)
             ]
         );
         $this->context->controller->registerStylesheet(
