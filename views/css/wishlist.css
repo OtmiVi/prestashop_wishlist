@@ -8,7 +8,7 @@
     transition: background-color 0.3s;
 }
 
-.wishlist-button-remove{
+.wishlist-button-remove, .wishlist-list-remove{
     background-color: #ee1e2d;
     color: #fff;
     border: none;
@@ -25,6 +25,6 @@
     background-color: #0056b3;
 }
 
-.wishlist-button-remove:hover{
+.wishlist-button-remove:hover , .wishlist-list-remove:hover{
     background-color: firebrick;
 }
