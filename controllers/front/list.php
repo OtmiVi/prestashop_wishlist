@@ -20,11 +20,20 @@ class WishlistListModuleFrontController extends ModuleFrontController
 
         $id_lang = $this->context->language->id;
         $ids = WishListEntity::getProductIdsList();
+        $products = [];
         foreach ($ids as $id){
-            $products[] = new Product($id,false, $id_lang);
+            $product = new Product($id,false, $id_lang);
+            $product->price_static = Product::getPriceStatic($id,null,null,0);
+            $images = Image::getImages($id_lang, $id);
+            $image = new Image($images[0]['id_image']);
+            $image_url = _PS_BASE_URL_._THEME_PROD_DIR_.$image->getExistingImgPath() . '.jpg';
+            $product->image = $image;
+            $product->image_url = $image_url;
+            $products[] = $product;
         }
 
         parent::initContent();
+        dump($products[0]);
 
         $this->context->smarty->assign([
             'data' => $products,
