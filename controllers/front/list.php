@@ -18,16 +18,10 @@ class WishlistListModuleFrontController extends ModuleFrontController
             Tools::redirect('index.php');
         }
 
-        $sql = new DbQuery();
-        $sql->select('id_product');
-        $sql->from('wishlist', 'w');
-        $sql->where('w.id_customer = ' . $customerId);
-        $sql = Db::getInstance()->executes($sql);
-
         $id_lang = $this->context->language->id;
-        $products = [];
-        foreach ($sql as $item){
-            $products[] = new Product($item['id_product'],false, $id_lang);
+        $ids = WishListEntity::getProductIdsList();
+        foreach ($ids as $id){
+            $products[] = new Product($id,false, $id_lang);
         }
 
         parent::initContent();

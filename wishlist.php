@@ -3,6 +3,8 @@ if (!defined('_PS_VERSION_')) {
     exit;
 }
 
+require_once _PS_MODULE_DIR_ . 'wishlist/classes/WishListEntity.php';
+
 class Wishlist extends Module
 {
 
@@ -65,8 +67,22 @@ class Wishlist extends Module
         );
     }
 
-    public function hookDisplayProductListReviews()
+    public function hookDisplayProductListReviews($params)
     {
+        $id_product = $params['product']->id;
+
+        $product = WishListEntity::getProductFromWishlist($id_product);
+        dump($product);
+
+        if ($product) {
+            $className = 'wishlist-button-remove';
+        }else {
+            $className = 'wishlist-button';
+        }
+
+        $this->context->smarty->assign([
+            'class_name' => $className,
+        ]);
         return $this->display(__FILE__, 'views/templates/hook/wishlist.tpl');
     }
 
@@ -77,8 +93,6 @@ class Wishlist extends Module
 
     public function hookDisplayNav2()
     {
-        $context = Context::getContext();
-
         $url = Context::getContext()->link->getModuleLink($this->name, 'list', [], true);
 
         $this->context->smarty->assign([
@@ -90,8 +104,6 @@ class Wishlist extends Module
 
     public function hookDisplayCustomerAccount()
     {
-        $context = Context::getContext();
-
         $url = Context::getContext()->link->getModuleLink($this->name, 'list', [], true);
 
         $this->context->smarty->assign([

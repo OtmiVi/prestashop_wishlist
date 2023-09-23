@@ -35,24 +35,17 @@ class WishlistActionsModuleFrontController extends ModuleFrontController
     {
 
         $productId = (int)Tools::getValue('productId');
-        $customerId = $this->context->customer->id;
+        $result = WishListEntity::getProductFromWishlist($productId);
 
-        $sql = new DbQuery();
-        $sql->select('id_wishlist');
-        $sql->from('wishlist', 'w');
-        $sql->where('w.id_product = ' . $productId);
-        $sql->where('w.id_customer = ' . $customerId);
-        $sql = Db::getInstance()->executes($sql);
-
-        foreach ($sql as $item){
+        foreach ($result as $item){
             $wishList = new WishListEntity($item['id_wishlist']);
             $wishList->delete();
         }
 
         $this->ajaxRender(
             json_encode([
-                'success' => 1,
-                'message' => [1, 1],
+                'success' => $productId,
+                'message' => [$productId],
             ])
         );
         exit;
