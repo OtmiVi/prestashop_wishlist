@@ -47,6 +47,7 @@ class Wishlist extends Module
             && $this->registerHook('displayProductAdditionalInfo')
             && $this->registerHook('displayNav2')
             && $this->registerHook('displayCustomerAccount')
+            && $this->registerHook('displayShoppingCartFooter')
             && Db::getInstance()->execute(
                 'CREATE TABLE IF NOT EXISTS `' . _DB_PREFIX_ . 'wishlist` 
                 (
@@ -111,6 +112,30 @@ class Wishlist extends Module
         ]);
 
         return $this->fetch('module:' . $this->name . '/views/templates/front/customerAccount.tpl');
+    }
+    public function hookDisplayShoppingCartFooter()
+    {
+
+        $context =  Context::getContext();
+
+        $id_lang = $this->context->language->id;
+        $ids = WishListEntity::getProductIdsList();
+        $products = [];
+        foreach ($ids as $id){
+            $product = new Product($id,false, $id_lang);
+            $product->price_static = Product::getPriceStatic($id,null,null,0);
+            $images = Image::getImages($id_lang, $id);
+            $image = new Image($images[0]['id_image']);
+            $image_url = _PS_BASE_URL_._THEME_PROD_DIR_.$image->getExistingImgPath() . '.jpg';
+            $product->image = $image;
+            $product->image_url = $image_url;
+            $products[] = $product;
+        }
+
+        $this->context->smarty->assign([
+            'data' => $products,
+        ]);
+        return $this->display(__FILE__, 'views/templates/hook/cart_wishlist.tpl');
     }
 
     public function hookActionFrontControllerSetMedia()
