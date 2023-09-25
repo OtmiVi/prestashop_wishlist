@@ -70,21 +70,35 @@ class Wishlist extends Module
 
     public function hookDisplayProductListReviews($params)
     {
-        $id_product = $params['product']->id;
 
-        $product = WishListEntity::getProductFromWishlist($id_product);
-        dump($product);
+        $customerId = Context::getContext()->customer->id;
+        if (!empty($customerId)) {
+            $id_product = $params['product']->id;
 
-        if ($product) {
-            $className = 'wishlist-button-remove';
-        }else {
-            $className = 'wishlist-button';
+            $product = WishListEntity::getProductFromWishlist($id_product);
+
+            if ($product) {
+                $className = 'wishlist-button-remove';
+            }else {
+                $className = 'wishlist-button';
+            }
+
+            $this->context->smarty->assign([
+                'class_name' => $className,
+            ]);
+        } else {
+            $this->context->smarty->assign([
+                'class_name' => 'wishlist-button',
+            ]);
         }
 
-        $this->context->smarty->assign([
-            'class_name' => $className,
-        ]);
-        return $this->display(__FILE__, 'views/templates/hook/wishlist.tpl');
+        Media::addJsDef( [
+                'add_button' => $this->l('Add to wishlist', 'wishlist'),
+                'remove_button' => $this->l('Remove from wishlist', 'wishlist')
+            ]
+        );
+
+        return $this->display(__FILE__, 'views/templates/hook/wishlistAddButton.tpl');
     }
 
     public function hookDisplayProductAdditionalInfo()
