@@ -88,21 +88,21 @@ $(document).ready(function(){
         });
     });
 
-    $('.wishlist-add-to-cart').on('click', function (e){
+    $('.wishlist-add-to-cart').on('click', function (e) {
         e.preventDefault();
         let id_product = $(this).data('idProduct');
+        let id_product_attribute = $(this).data('idProductAttribute');
         let quantity = 1;
         const token = prestashop.static_token;
         const url = prestashop.urls.pages.cart;
-        const query = 'add=1&action=update&ajax=true&token=' + token + '&id_product=' + id_product + '&qty=' + quantity;
+        const query = 'add=1&action=update&ajax=true&token=' + token + '&id_product=' + id_product + '&id_product_attribute=' + id_product_attribute + '&qty=' + quantity;
         var controllerUrl = url.concat(query);
         var functionName = "addToCart";
 
         $.ajax({
             cache: false,
             data: query,
-            success: function(resp)
-            {
+            success: function (resp) {
                 prestashop.emit('updateCart', {
                     reason: {
                         idProduct: resp.id_product,
@@ -110,7 +110,7 @@ $(document).ready(function(){
                     }, resp: resp
                 });
             },
-            error: function(resp) {
+            error: function (resp) {
                 prestashop.emit('handleError', {eventType: 'addProductToCart', resp: resp});
             }
         })
