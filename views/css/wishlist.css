@@ -28,3 +28,35 @@
 .wishlist-button-remove:hover, .wishlist-product-button-remove:hover, .wishlist-list-remove:hover {
     background-color: firebrick;
 }
+
+.wishlist-slider {
+    width: 750px; /* Set the width of your slider */
+    overflow: hidden;
+    position: relative;
+}
+
+.wishlist-items {
+    display: flex;
+    transition: transform 0.3s ease-in-out;
+}
+
+.wishlist_item {
+    flex: 0 0 300px; /* Set the width of each item */
+    margin-right: 10px; /* Adjust spacing between items */
+}
+
+.prev-slide, .next-slide {
+    background-color: #333;
+    color: #fff;
+    padding: 5px 10px;
+    cursor: pointer;
+    border: none;
+}
+
+.prev-slide {
+    left: 0;
+}
+
+.next-slide {
+    right: 0;
+}

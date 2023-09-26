@@ -134,4 +134,29 @@ $(document).ready(function () {
         button.prop('disabled', false);
     }
 
+    var slideIndex = 0;
+    var slideWidth = $(".wishlist_item").outerWidth();
+    var itemsPerSlide = 3;
+
+    // Next Slide
+    $(".next-slide").click(function () {
+        slideIndex++;
+        var maxIndex = $(".wishlist_item").length - itemsPerSlide;
+        if (slideIndex > maxIndex) {
+            slideIndex = 0;
+        }
+        var translateX = -slideIndex * slideWidth;
+        $(".wishlist-items").css("transform", "translateX(" + translateX + "px)");
+    });
+
+    // Previous Slide
+    $(".prev-slide").click(function () {
+        slideIndex--;
+        if (slideIndex < 0) {
+            slideIndex = $(".wishlist_item").length - itemsPerSlide;
+        }
+        var translateX = -slideIndex * slideWidth;
+        $(".wishlist-items").css("transform", "translateX(" + translateX + "px)");
+    });
+
 });
