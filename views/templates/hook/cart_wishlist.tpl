@@ -3,7 +3,7 @@
 {/if}
 {foreach from=$data item=item}
 
-    <div class="item">
+    <div class="wishlist_item">
         <img
             src="{$item->image_url}"
             alt="{$item->name}"
@@ -14,8 +14,8 @@
         <p>{$item->name}</p>
         <p>{$item->price_static} {$currency.iso_code}</p>
 
-        <button class="wishlist-add-to-cart" data-id-product={$item->id}>
-            {l s='Remove from wishlist' mod='wishlist'}
+        <button class="wishlist-add-to-cart" data-id-product={$item->id} >
+            {l s='Add to cart' mod='wishlist'}
         </button>
         <button class="wishlist-list-remove" data-id-product={$item->id}>
             {l s='Remove from wishlist' mod='wishlist'}
