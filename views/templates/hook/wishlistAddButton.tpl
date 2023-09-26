@@ -3,7 +3,7 @@
         {if $customer.is_logged}
             {if $class_name == "wishlist-button-remove"}
                 {l s='Remove from wishlist' mod='wishlist'}
-                {else}
+            {else}
                 {l s='Add to wishlist' mod='wishlist'}
             {/if}
         {else}
@@ -13,4 +13,3 @@
         {/if}
     </button>
 {/block}
-<h1>111</h1>

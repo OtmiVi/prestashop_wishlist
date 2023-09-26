@@ -1,5 +1,5 @@
-$(document).ready(function(){
-    $('.wishlist-button, .wishlist-button-remove').on('click', function (e){
+$(document).ready(function () {
+    $('.wishlist-button, .wishlist-button-remove').on('click', function (e) {
         e.preventDefault();
         let button = $(this);
         button.prop('disabled', true);
@@ -18,19 +18,17 @@ $(document).ready(function(){
                 ajax: 1,
                 action: action,
             },
-            success: function(jsonData)
-            {
+            success: function (jsonData) {
                 console.log(jsonData);
                 changeStatus(button, action);
             },
-            error: function(error)
-            {
+            error: function (error) {
                 console.log(error);
             }
         });
     });
 
-    $('.wishlist-product-button, .wishlist-product-button-remove').on('click', function (e){
+    $('.wishlist-product-button, .wishlist-product-button-remove').on('click', function (e) {
         e.preventDefault();
         let button = $(this);
         button.prop('disabled', true);
@@ -49,19 +47,17 @@ $(document).ready(function(){
                 ajax: 1,
                 action: action,
             },
-            success: function(jsonData)
-            {
+            success: function (jsonData) {
                 console.log(jsonData);
                 changeStatusProductPage(button, action);
             },
-            error: function(error)
-            {
+            error: function (error) {
                 console.log(error);
             }
         });
     });
 
-    $('.wishlist-list-remove').on('click', function (e){
+    $('.wishlist-list-remove').on('click', function (e) {
         e.preventDefault();
         let button = $(this);
         let id_product = button.data('idProduct');
@@ -77,12 +73,10 @@ $(document).ready(function(){
                 ajax: 1,
                 action: 'remove',
             },
-            success: function(jsonData)
-            {
+            success: function (jsonData) {
                 removeProductFromList(button);
             },
-            error: function(error)
-            {
+            error: function (error) {
                 console.log(error);
             }
         });
@@ -120,21 +114,21 @@ $(document).ready(function(){
         button.closest('.wishlist_item').remove();
     }
 
-    function changeStatus(button, action){
+    function changeStatus(button, action) {
         button.toggleClass('wishlist-button wishlist-button-remove');
-        if(action === 'add'){
+        if (action === 'add') {
             button.text(remove_button);
-        }else {
+        } else {
             button.text(add_button);
         }
         button.prop('disabled', false);
     }
 
-    function changeStatusProductPage(button, action){
+    function changeStatusProductPage(button, action) {
         button.toggleClass('wishlist-product-button wishlist-product-button-remove');
-        if(action === 'add'){
+        if (action === 'add') {
             button.text(remove_button);
-        }else {
+        } else {
             button.text(add_button);
         }
         button.prop('disabled', false);

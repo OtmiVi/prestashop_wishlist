@@ -75,11 +75,11 @@ class Wishlist extends Module
         if (!empty($id_customer)) {
             $id_product = $params['product']->id;
             $id_product_attribute = $params['product']->id_product_attribute;
-            $product = WishListEntity::getProductFromWishlist($id_customer, $id_product,$id_product_attribute);
+            $product = WishListEntity::getProductFromWishlist($id_customer, $id_product, $id_product_attribute);
 
             if ($product) {
                 $className = 'wishlist-button-remove';
-            }else {
+            } else {
                 $className = 'wishlist-button';
             }
 
@@ -92,7 +92,7 @@ class Wishlist extends Module
             ]);
         }
 
-        Media::addJsDef( [
+        Media::addJsDef([
                 'add_button' => $this->l('Add to wishlist', 'wishlist'),
                 'remove_button' => $this->l('Remove from wishlist', 'wishlist')
             ]
@@ -107,10 +107,10 @@ class Wishlist extends Module
         if (!empty($id_customer)) {
             $id_product = $params['product']->id;
             $id_product_attribute = $params['product']->id_product_attribute;
-            $product = WishListEntity::getProductFromWishlist($id_customer, $id_product,$id_product_attribute);
+            $product = WishListEntity::getProductFromWishlist($id_customer, $id_product, $id_product_attribute);
             if ($product) {
                 $className = 'wishlist-product-button-remove';
-            }else {
+            } else {
                 $className = 'wishlist-product-button';
             }
 
@@ -123,7 +123,7 @@ class Wishlist extends Module
             ]);
         }
 
-        Media::addJsDef( [
+        Media::addJsDef([
                 'add_button' => $this->l('Add to wishlist', 'wishlist'),
                 'remove_button' => $this->l('Remove from wishlist', 'wishlist')
             ]
@@ -152,6 +152,7 @@ class Wishlist extends Module
 
         return $this->fetch('module:' . $this->name . '/views/templates/front/customerAccount.tpl');
     }
+
     public function hookDisplayShoppingCartFooter()
     {
 
@@ -179,7 +180,7 @@ class Wishlist extends Module
     public function hookActionFrontControllerSetMedia()
     {
 
-        Media::addJsDef( [
+        Media::addJsDef([
                 'url' => Context::getContext()->link->getModuleLink($this->name, 'actions', [], true)
             ]
         );
