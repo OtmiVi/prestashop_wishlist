@@ -2,7 +2,9 @@ $(document).ready(function(){
     $('.wishlist-button, .wishlist-button-remove').on('click', function (e){
         e.preventDefault();
         let button = $(this);
-        let productId = button.closest('.js-product-miniature').data('idProduct');
+        button.prop('disabled', true);
+        let id_product = button.closest('.js-product-miniature').data('idProduct');
+        let id_product_attribute = button.closest('.js-product-miniature').data('idProductAttribute');
         let action = button.hasClass('wishlist-button') ? 'add' : 'remove';
 
 
@@ -11,13 +13,14 @@ $(document).ready(function(){
             url: url,
             datatype: 'json',
             data: {
-                productId: productId,
+                id_product: id_product,
+                id_product_attribute: id_product_attribute,
                 ajax: 1,
                 action: action,
             },
             success: function(jsonData)
             {
-                console.log(action);
+                console.log(jsonData);
                 changeStatus(button, action);
             },
             error: function(error)
@@ -92,6 +95,7 @@ $(document).ready(function(){
         }else {
             button.text(add_button);
         }
+        button.prop('disabled', false);
     }
 
 });
