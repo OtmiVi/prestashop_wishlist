@@ -33,14 +33,16 @@ $(document).ready(function(){
     $('.wishlist-list-remove').on('click', function (e){
         e.preventDefault();
         let button = $(this);
-        let productId = button.data('idProduct');
+        let id_product = button.data('idProduct');
+        let id_product_attribute = button.data('idProductAttribute');
 
         $.ajax({
             type: 'POST',
             url: url,
             datatype: 'json',
             data: {
-                productId: productId,
+                id_product: id_product,
+                id_product_attribute: id_product_attribute,
                 ajax: 1,
                 action: 'remove',
             },
@@ -57,7 +59,6 @@ $(document).ready(function(){
 
     $('.wishlist-add-to-cart').on('click', function (e){
         e.preventDefault();
-        console.log(1);
         let id_product = $(this).data('idProduct');
         let quantity = 1;
         const token = prestashop.static_token;
@@ -85,7 +86,7 @@ $(document).ready(function(){
     });
 
     function removeProductFromList(button) {
-        button.closest('.item').remove();
+        button.closest('.wishlist_item').remove();
     }
 
     function changeStatus(button, action){

@@ -26,14 +26,10 @@ class WishListEntity extends ObjectModel
         $context = Context::getContext();
         $customerId = $context->customer->id;
         $sql = new DbQuery();
-        $sql->select('id_product');
+        $sql->select('id_product, id_product_attribute');
         $sql->from('wishlist', 'w');
         $sql->where('w.id_customer = ' . $customerId);
-        $sql = Db::getInstance()->executes($sql);
-        $list = [];
-        foreach ($sql as $item){
-            $list[] =$item['id_product'];
-        }
+        $list = Db::getInstance()->executes($sql);
         return $list;
     }
 
