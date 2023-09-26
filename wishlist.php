@@ -12,7 +12,7 @@ class Wishlist extends Module
     {
         $this->name = 'wishlist';
         $this->tab = 'front_office_features';
-        $this->version = '1.0.0';
+        $this->version = '1.1.6';
         $this->author = 'Yura Kuziv';
         $this->need_instance = 0;
         $this->ps_versions_compliancy = [
@@ -51,7 +51,7 @@ class Wishlist extends Module
             && Db::getInstance()->execute(
                 'CREATE TABLE IF NOT EXISTS `' . _DB_PREFIX_ . 'wishlist` 
                 (
-                    `id_wishlist` int(10) NOT NULL AUTO_INCREMENT,
+                  `id_wishlist` int(10) NOT NULL AUTO_INCREMENT,
                   `id_product` int(10) NOT NULL,
                   `id_customer` int(10) NOT NULL,
                   PRIMARY KEY (`id_wishlist`)
@@ -137,7 +137,7 @@ class Wishlist extends Module
         $products = [];
         foreach ($ids as $id){
             $product = new Product($id,false, $id_lang);
-            $product->price_static = Product::getPriceStatic($id,null,null,0);
+            $product->price_static = Product::getPriceStatic($id,null,null,2);
             $images = Image::getImages($id_lang, $id);
             $image = new Image($images[0]['id_image']);
             $image_url = _PS_BASE_URL_._THEME_PROD_DIR_.$image->getExistingImgPath() . '.jpg';
