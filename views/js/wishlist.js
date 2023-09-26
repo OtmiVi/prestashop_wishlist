@@ -30,6 +30,37 @@ $(document).ready(function(){
         });
     });
 
+    $('.wishlist-product-button, .wishlist-product-button-remove').on('click', function (e){
+        e.preventDefault();
+        let button = $(this);
+        button.prop('disabled', true);
+        let id_product = button.data('idProduct');
+        let id_product_attribute = button.data('idProductAttribute');
+        let action = button.hasClass('wishlist-product-button') ? 'add' : 'remove';
+
+
+        $.ajax({
+            type: 'POST',
+            url: url,
+            datatype: 'json',
+            data: {
+                id_product: id_product,
+                id_product_attribute: id_product_attribute,
+                ajax: 1,
+                action: action,
+            },
+            success: function(jsonData)
+            {
+                console.log(jsonData);
+                changeStatusProductPage(button, action);
+            },
+            error: function(error)
+            {
+                console.log(error);
+            }
+        });
+    });
+
     $('.wishlist-list-remove').on('click', function (e){
         e.preventDefault();
         let button = $(this);
@@ -91,6 +122,16 @@ $(document).ready(function(){
 
     function changeStatus(button, action){
         button.toggleClass('wishlist-button wishlist-button-remove');
+        if(action === 'add'){
+            button.text(remove_button);
+        }else {
+            button.text(add_button);
+        }
+        button.prop('disabled', false);
+    }
+
+    function changeStatusProductPage(button, action){
+        button.toggleClass('wishlist-product-button wishlist-product-button-remove');
         if(action === 'add'){
             button.text(remove_button);
         }else {

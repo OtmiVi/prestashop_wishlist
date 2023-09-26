@@ -71,11 +71,11 @@ class Wishlist extends Module
     public function hookDisplayProductListReviews($params)
     {
 
-        $customerId = Context::getContext()->customer->id;
-        if (!empty($customerId)) {
+        $id_customer = Context::getContext()->customer->id;
+        if (!empty($id_customer)) {
             $id_product = $params['product']->id;
-
-            $product = WishListEntity::getProductFromWishlist($id_product);
+            $id_product_attribute = $params['product']->id_product_attribute;
+            $product = WishListEntity::getProductFromWishlist($id_customer, $id_product,$id_product_attribute);
 
             if ($product) {
                 $className = 'wishlist-button-remove';
@@ -101,9 +101,34 @@ class Wishlist extends Module
         return $this->display(__FILE__, 'views/templates/hook/wishlistAddButton.tpl');
     }
 
-    public function hookDisplayProductAdditionalInfo()
+    public function hookDisplayProductAdditionalInfo($params)
     {
-        return $this->display(__FILE__, 'views/templates/hook/product_page_wishlist.tpl');
+        $id_customer = Context::getContext()->customer->id;
+        if (!empty($id_customer)) {
+            $id_product = $params['product']->id;
+            $id_product_attribute = $params['product']->id_product_attribute;
+            $product = WishListEntity::getProductFromWishlist($id_customer, $id_product,$id_product_attribute);
+            if ($product) {
+                $className = 'wishlist-product-button-remove';
+            }else {
+                $className = 'wishlist-product-button';
+            }
+
+            $this->context->smarty->assign([
+                'class_name' => $className,
+            ]);
+        } else {
+            $this->context->smarty->assign([
+                'class_name' => 'wishlist-button',
+            ]);
+        }
+
+        Media::addJsDef( [
+                'add_button' => $this->l('Add to wishlist', 'wishlist'),
+                'remove_button' => $this->l('Remove from wishlist', 'wishlist')
+            ]
+        );
+        return $this->display(__FILE__, 'views/templates/hook/productPageWishlist.tpl');
     }
 
     public function hookDisplayNav2()
